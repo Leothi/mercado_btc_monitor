@@ -5,9 +5,10 @@ from dotenv import load_dotenv
 
 from api.utils.logger import DEFAULT_FORMAT
 
-load_dotenv()
 
 class EnvironmentVariables(BaseSettings):
+    load_dotenv()
+    
     # FastAPI
     FASTAPI_HOST: str = '0.0.0.0'
     FASTAPI_PORT: int = 8080

@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware
 
-from api.routes import mensagem, math, usuario, documentacao
+from api.routes import price_monitoring
 from api.models import DEFAULT_RESPONSES_JSON
 from api.modules.default.middleware import Middleware
 from api.exceptions import ExceptionHandler
@@ -33,7 +33,7 @@ logger.add("./logs/teste.log", level=0, format=envs.LOGURU_FORMAT, rotation='500
 logger.add("./logs/teste_error.log", level=40, format=envs.LOGURU_FORMAT, rotation='500.MB')
 
 # Instância API
-app = FastAPI(title='Mercado BTC Monitor', description="Api para monitoramento de BTC.",
+app = FastAPI(title='Mercado BTC Monitor', description="Api para monitoração de BTC.",
               version=__version__)
 
 # CORS
@@ -46,12 +46,7 @@ app.add_middleware(
 )
 
 # Rotas
-app.include_router(mensagem.router, prefix='/mensagem',
-                   tags=['Mensagem'], responses={**DEFAULT_RESPONSES_JSON})
-app.include_router(math.router, prefix='/math',
-                   tags=['Matemática'], responses={**DEFAULT_RESPONSES_JSON})
-app.include_router(usuario.router, prefix='/usuario',
-                   tags=['Usuário'], responses={**DEFAULT_RESPONSES_JSON})
+app.include_router(price_monitoring.router, prefix='/monitoring', tags=["BOT Bitcoin"])
 
 # Módulos da API
 Middleware(app)
