@@ -55,3 +55,11 @@ Em construção.
 * API de Dados Mercado Bitcoin
 * GCP App Engine
 * GCP Cloud Scheduler
+
+# Exemplo de funcionamento
+## Swagger
+![swagger](https://user-images.githubusercontent.com/42444599/103312415-b8bdd680-49fb-11eb-9b8d-0968c64d4fac.png)
+
+## Telegram
+![logger](https://user-images.githubusercontent.com/42444599/103312427-c1aea800-49fb-11eb-8fcf-f4ddbb72c1f4.png)
+![price_target](https://user-images.githubusercontent.com/42444599/103312434-c96e4c80-49fb-11eb-92eb-8ced181a612d.png)
