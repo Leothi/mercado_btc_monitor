@@ -3,10 +3,8 @@ from pydantic import Field
 from api.models import SuccessResponse
 
 
-class SendPriceResponse(SuccessResponse):
-    """Response model to /send_price"""
+class MonitoringResponse(SuccessResponse):
+    """Response model to /monitoring prefix"""
     enviado: bool
     
-class TargetPriceResponse(SuccessResponse):
-    """Response model to /send_price"""
-    resultado: str
+

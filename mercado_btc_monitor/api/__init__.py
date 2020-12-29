@@ -46,7 +46,11 @@ app.add_middleware(
 )
 
 # Rotas
-app.include_router(price_monitoring.router, prefix='/monitoring', tags=["BOT Bitcoin"])
+app.include_router(price_monitoring.router, 
+                   prefix='/monitoring', 
+                   tags=["BOT Bitcoin"],
+                   responses={**DEFAULT_RESPONSES_JSON}
+                   )
 
 # Módulos da API
 Middleware(app)

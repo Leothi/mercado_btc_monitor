@@ -1,14 +1,26 @@
 import os
 
 from pydantic import BaseSettings
-from dotenv import load_dotenv
+from enum import Enum
 
 from api.utils.logger import DEFAULT_FORMAT
 
 
+class EnvironmentEnum(Enum):
+    LOCAL = 'LOCAL'
+    DESENV = 'DESENV'
+    HM = 'HM'
+    SERVICE = 'SERVICE'
+
 class EnvironmentVariables(BaseSettings):
-    load_dotenv()
-    
+    ENVIRONMENT: EnvironmentEnum = 'LOCAL'
+  
+    if ENVIRONMENT == EnvironmentEnum.LOCAL.name:
+        from dotenv import load_dotenv  # noqa
+        load_dotenv()
+    else:
+        pass
+        
     # FastAPI
     FASTAPI_HOST: str = '0.0.0.0'
     FASTAPI_PORT: int = 8080
@@ -23,7 +35,8 @@ class EnvironmentVariables(BaseSettings):
     
     # Telegram
     BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
-    CHAT_ID = os.environ.get('CHAT_ID', '')
+    LOGGER_CHAT_ID = os.environ.get('LOGGER_CHAT_ID', '')
+    TARGET_CHAT_ID = os.environ.get('TARGET_CHAT_ID', '')
     BOT_API_URL: str = 'https://api.telegram.org/bot'
     PARSE_MODE: str = 'MarkdownV2'    
     
