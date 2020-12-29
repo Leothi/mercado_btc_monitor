@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+__version__ = '0.0.2'
+
 try:
     with open('README.md') as file:
         long_description = file.read()
@@ -19,7 +21,7 @@ requirements = [
 
 setup(
     name='Mercado BTC Price Monitor',
-    version='0.0.1',
+    version=__version__,
     long_description=long_description,
     packages=find_packages(),
     include_package_data=True,
