@@ -3,8 +3,10 @@ from pydantic import Field
 from api.models import SuccessResponse
 
 
-# Validação de campos e construção do Schema no Swagger
-# ... Significa obrigatório (required)
 class SendPriceResponse(SuccessResponse):
     """Response model to /send_price"""
-    resultado: dict
+    enviado: bool
+    
+class TargetPriceResponse(SuccessResponse):
+    """Response model to /send_price"""
+    resultado: str

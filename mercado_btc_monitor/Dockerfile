@@ -12,4 +12,4 @@ COPY . /code
 
 RUN pip3 install .
 
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "mercadado_btc_monitor.api/settings.py", "mercadado_btc_monitor.api:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "api/settings.py", "api:app"]
