@@ -20,7 +20,8 @@ class ErrorResponse(BaseModel):
 
 # Mensagens de erro padronizadas
 DEFAULT_RESPONSES = [
-    ErrorResponse(status=422, message="Parâmetros da requisição inválidos!", details="1 validation error for Request..."),
+    ErrorResponse(status=422, message="Parâmetros da requisição inválidos!",
+                  details="1 validation error for Request..."),
     ErrorResponse(status=500, message="Erro interno!"),
     ErrorResponse(status=404, message="Não encontrado"),
     ErrorResponse(status=400, message="Bad Request"),

@@ -29,8 +29,10 @@ logger.level('REQUEST FINALIZADA', no=38, color="<yellow>")
 logger.level('LOG ROTA', no=39, color="<light-green>")
 
 # Saída para arquivo logger
-logger.add("./logs/teste.log", level=0, format=envs.LOGURU_FORMAT, rotation='500 MB')
-logger.add("./logs/teste_error.log", level=40, format=envs.LOGURU_FORMAT, rotation='500.MB')
+logger.add("./logs/teste.log", level=0,
+           format=envs.LOGURU_FORMAT, rotation='500 MB')
+logger.add("./logs/teste_error.log", level=40,
+           format=envs.LOGURU_FORMAT, rotation='500.MB')
 
 # Instância API
 app = FastAPI(title='Mercado BTC Monitor', description="Api para monitoração de BTC.",
@@ -46,8 +48,8 @@ app.add_middleware(
 )
 
 # Rotas
-app.include_router(price_monitoring.router, 
-                   prefix='/monitoring', 
+app.include_router(price_monitoring.router,
+                   prefix='/monitoring',
                    tags=["BOT Bitcoin"],
                    responses={**DEFAULT_RESPONSES_JSON}
                    )

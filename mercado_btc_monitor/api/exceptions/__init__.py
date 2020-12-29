@@ -22,7 +22,8 @@ class ExceptionHandler:
         app.exception_handler(Exception)(self.exception_handler)
         app.exception_handler(HTTPException)(self.http_excep)
         app.exception_handler(APIException)(self.camara_exception_handler)
-        app.exception_handler(RequestValidationError)(self.validation_exception_handler)
+        app.exception_handler(RequestValidationError)(
+            self.validation_exception_handler)
 
     @staticmethod
     async def exception_handler(request: Request, excecao: Exception):
@@ -35,7 +36,8 @@ class ExceptionHandler:
 
     @staticmethod
     async def http_excep(requisicao: Request, excecao: HTTPException):
-        mensagem = {404: "Não encontrado", 500: "Erro interno", 400: "Bad Request"}
+        mensagem = {404: "Não encontrado",
+                    500: "Erro interno", 400: "Bad Request"}
         return JSONResponse(
             status_code=excecao.status_code,
             content={

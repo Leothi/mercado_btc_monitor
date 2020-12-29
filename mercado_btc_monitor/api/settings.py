@@ -12,36 +12,38 @@ class EnvironmentEnum(Enum):
     HM = 'HM'
     SERVICE = 'SERVICE'
 
+
 class EnvironmentVariables(BaseSettings):
     ENVIRONMENT: EnvironmentEnum = 'LOCAL'
-  
+
     if ENVIRONMENT == EnvironmentEnum.LOCAL.name:
         from dotenv import load_dotenv  # noqa
         load_dotenv()
     else:
         pass
-        
+
     # FastAPI
     FASTAPI_HOST: str = '0.0.0.0'
     FASTAPI_PORT: int = 8080
     FASTAPI_RELOAD: bool = False
     FASTAPI_ACCESS_LOG: bool = False
-   
+
     # Logger
     LOGGER_SWAGGER: bool = False
     LOGGER_IGNORE: str = '/docs /redoc /openapi.json /metrics /health /favicon.ico / /# /_static/perfil_ico.png /_static/perfil.png'
     LOGURU_FORMAT: str = DEFAULT_FORMAT
     LOG_LOCAL: bool = False
-    
+
     # Telegram
     BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
     LOGGER_CHAT_ID = os.environ.get('LOGGER_CHAT_ID', '')
     TARGET_CHAT_ID = os.environ.get('TARGET_CHAT_ID', '')
     BOT_API_URL: str = 'https://api.telegram.org/bot'
-    PARSE_MODE: str = 'MarkdownV2'    
-    
+    PARSE_MODE: str = 'MarkdownV2'
+
     # Mercado BTC
     DATA_API_URL: str = "https://www.mercadobitcoin.net/api/BTC"
+
 
 envs = EnvironmentVariables()
 

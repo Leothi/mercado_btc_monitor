@@ -25,7 +25,8 @@ class Middleware:
         start_time = perf_counter()
         response = await callnext(request)
         process_time = f'{perf_counter() - start_time:.4f}'
-        log_request("REQUEST FINALIZADA", method, id, ip, path, process_time, local)
+        log_request("REQUEST FINALIZADA", method, id,
+                    ip, path, process_time, local)
 
         response.headers["X-Process-Time"] = process_time
         return response
