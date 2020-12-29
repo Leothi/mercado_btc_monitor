@@ -17,7 +17,9 @@ Em construção.
 
 # Como utilizar via GCP
 * Necessário conhecimento prévio na ferramenta;
-* Criar arquivo `app.yaml` com *runtime* e *env* necessários para Dockerfile e *env_variables* com as mesmas variáveis de ambiente explicadas abaixo.
+* Criar arquivo `app.yaml` com *runtime* e *env* necessários para Dockerfile e *env_variables* com as mesmas variáveis de ambiente explicadas abaixo;
+* Fazer deploy com a ferramenta desejada (feito pelo App Engine);
+* Setar crons via Google Scheduler.
 
 
 # Como utilizar localmente
@@ -32,7 +34,7 @@ Em construção.
         TARGET_CHAT_ID = '<chat_id para alerta de target price>'
     ```
 
-    
+
 # Algumas ferramentas utilizadas na construção
 * Docker
 * FastAPI
