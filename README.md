@@ -17,9 +17,19 @@ Em construção.
 
 # Como utilizar via GCP
 * Necessário conhecimento prévio na ferramenta;
-* Criar arquivo `app.yaml` com *runtime* e *env* necessários para Dockerfile e *env_variables* com as mesmas variáveis de ambiente explicadas abaixo;
+* Criar arquivo `app.yaml` no mesmo diretório do Dockerfile com *runtime* e *env* necessários para Dockerfile e *env_variables* com as mesmas variáveis de ambiente citadas acima. Exemplo:
+
+    ```yaml
+    runtime: custom
+    env: flex
+    env_variables:
+        BOT_TOKEN: '<token do bot criado>'
+        LOGGER_CHAT_ID: '<chat_id para logging do preço atual>'
+        TARGET_CHAT_ID: '<chat_id para alerta de target price>'
+    ```
+
 * Fazer deploy com a ferramenta desejada (feito pelo App Engine);
-* Setar crons via Google Scheduler.
+* Setar crons via Cloud Scheduler para os endpoints desejados.
 
 
 # Como utilizar localmente
@@ -28,10 +38,10 @@ Em construção.
 * Aplicação roda em `0.0.0.0:8080/docs` por padrão;
 * Na opção local, a notificação periódica via Telegram é desabilitada.
 * Alterar as seguintes váriáveis de ambiente (recomendado utilizar arquivo `.env` no mesmo diretório de `settings.py`):
-    ```
-        BOT_TOKEN = '<token do bot criado>'
-        LOGGER_CHAT_ID = '<chat_id para logging do preço atual>'
-        TARGET_CHAT_ID = '<chat_id para alerta de target price>'
+    ```.env
+    BOT_TOKEN = '<token do bot criado>'
+    LOGGER_CHAT_ID = '<chat_id para logging do preço atual>'
+    TARGET_CHAT_ID = '<chat_id para alerta de target price>'
     ```
 
 
