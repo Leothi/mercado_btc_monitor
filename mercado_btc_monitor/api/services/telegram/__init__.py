@@ -6,7 +6,7 @@ from api.settings import envs
 
 
 class TelegramAPI:
-    """Api de BOT do Telegram. """ 
+    """Api de BOT do Telegram. """
     base_url: str = envs.BOT_API_URL + envs.BOT_TOKEN
 
     @classmethod
@@ -23,7 +23,7 @@ class TelegramAPI:
         :type disable_notifications: bool, optional
         :return: Dicionário contendo informações da API de envio.
         :rtype: dict
-        """        
+        """
         disable_notifications = 'true' if disable_notifications else 'false'
         url = f'{cls.base_url}/sendMessage?chat_id={chat_id}&parse_mode={parse_mode}&text={message}&disable_notification={disable_notifications}'
         response = requests.get(url)

@@ -6,7 +6,7 @@ from api.settings import envs
 
 
 class BTCDataAPI:
-    """Api de Dados da corretora Mercado Bitcoin. """    
+    """Api de Dados da corretora Mercado Bitcoin. """
     _base_url = envs.DATA_API_URL
 
     @classmethod
@@ -15,7 +15,7 @@ class BTCDataAPI:
 
         :return: Resumo dos preços atuais da moeda.
         :rtype: dict
-        """        
+        """
         url = f'{cls._base_url}/ticker'
 
         response = requests.get(url)

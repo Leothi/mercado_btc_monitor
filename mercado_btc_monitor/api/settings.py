@@ -39,7 +39,7 @@ class EnvironmentVariables(BaseSettings):
     LOGGER_CHAT_ID = os.environ.get('LOGGER_CHAT_ID', '')
     TARGET_CHAT_ID = os.environ.get('TARGET_CHAT_ID', '')
     BOT_API_URL: str = 'https://api.telegram.org/bot'
-    PARSE_MODE: str = 'MarkdownV2'
+    PARSE_MODE: str = 'Markdown'
 
     # Mercado BTC
     DATA_API_URL: str = "https://www.mercadobitcoin.net/api/BTC"
