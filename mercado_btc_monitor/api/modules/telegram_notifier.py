@@ -13,13 +13,14 @@ class TelegramNotifier:
 
     @classmethod
     def make_current_cfg_dict(cls):
-        notifications = {
-            "current_price": cls.notify_current_price,
-            "gt_target_price": cls.notify_if_gt_target_price,
-            "lt_target_price": cls.notify_if_lt_target_price,
+        configurations = {
+            "notificacoes": {
+                "current_price": cls.notify_current_price,
+                "gt_target_price": cls.notify_if_gt_target_price,
+                "lt_target_price": cls.notify_if_lt_target_price,
+            }
         }
-
-        return notifications
+        return configurations
 
     @classmethod
     def set_notifications(cls, notify_current_price: bool,
@@ -30,7 +31,7 @@ class TelegramNotifier:
         cls.notify_if_gt_target_price = notify_if_gt_target_price
         cls.notify_if_lt_target_price = notify_if_lt_target_price
 
-        return cls.make_current_cfg_dict()
+        return cls.make_current_cfg_dict()['notificacoes']
 
     @classmethod
     def send_current_price(cls, disable_notifications: bool) -> bool:

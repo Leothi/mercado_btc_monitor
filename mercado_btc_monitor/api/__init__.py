@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware
 
-from api.routes import message, configuration
+from api.routes import messaging, configuration
 from api.models import DEFAULT_RESPONSES_JSON
 from api.modules.default.middleware import Middleware
 from api.exceptions import ExceptionHandler
@@ -48,7 +48,7 @@ app.add_middleware(
 )
 
 # Rotas
-app.include_router(message.router,
+app.include_router(messaging.router,
                    prefix='/send',
                    tags=["Envio de mensagem"],
                    responses={**DEFAULT_RESPONSES_JSON}

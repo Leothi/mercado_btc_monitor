@@ -1,8 +1,6 @@
 import uvicorn
 
 from api.settings import envs
-from api.services.telegram import TelegramAPI
-from api.services.mercado_btc.data_api import BTCDataAPI
 
 
 def start():
