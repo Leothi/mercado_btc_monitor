@@ -1,5 +1,6 @@
+from enum import Enum
 from pydantic import BaseModel, Field
-from typing import Dict, Union, List
+from typing import Dict, Union
 
 from api.models import SuccessResponse
 
@@ -24,7 +25,14 @@ class NotificationsResponse(SuccessResponse):
 class TargetPrice(BaseModel):
     greater_than: float = Field(...)
     lesser_than: float = Field(...)
-
+    
+class Comparation(str, Enum):
+    greater_than = 'greater_than'
+    lesser_than = 'lesser_than'
+    
+class SetTargetPriceResponse(SuccessResponse):
+    target_prices: TargetPrice
+    
 
 class ConfigurationsResponse(SuccessResponse):
     """Response model to /get_all on /cfg prefix"""

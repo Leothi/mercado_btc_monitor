@@ -10,17 +10,10 @@ class TelegramNotifier:
     notify_current_price: bool = True
     notify_if_gt_target_price: bool = True
     notify_if_lt_target_price: bool = True
+    
+    gt_target_price: float
+    lt_target_price: float
 
-    @classmethod
-    def make_current_cfg_dict(cls):
-        configurations = {
-            "notificacoes": {
-                "current_price": cls.notify_current_price,
-                "gt_target_price": cls.notify_if_gt_target_price,
-                "lt_target_price": cls.notify_if_lt_target_price,
-            }
-        }
-        return configurations
 
     @classmethod
     def set_notifications(cls, notify_current_price: bool,
@@ -32,7 +25,33 @@ class TelegramNotifier:
         cls.notify_if_lt_target_price = notify_if_lt_target_price
 
         return cls.make_current_cfg_dict()['notificacoes']
+    
+    
+    @classmethod
+    def set_target_price(cls,comparison_type: str, target_price: float) -> dict:
+        if comparison_type == "greater_than":
+            cls.gt_target_price = target_price
+        elif comparison_type == "lesser_than":
+            cls.lt_target_price = target_price
+        return "Preço atualizado"
+    
 
+    @classmethod
+    def make_current_cfg_dict(cls):
+        configurations = {
+            "notificacoes": {
+                "current_price": cls.notify_current_price,
+                "gt_target_price": cls.notify_if_gt_target_price,
+                "lt_target_price": cls.notify_if_lt_target_price,
+            },
+            "target_prices": {
+                "gt_target_price": cls.gt_target_price if cls.gt_target_price else "",
+                "lt_target_price": cls.lt_target_price if cls.lt_target_price else "",
+            }
+        }
+        return configurations
+    
+    
     @classmethod
     def send_current_price(cls, disable_notifications: bool) -> bool:
         """Envia preço atual (último, venda e compra) via Telegram.

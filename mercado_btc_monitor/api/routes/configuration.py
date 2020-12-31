@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Form
 from loguru import logger
 
-from api.models.telegram_notifier import ConfigurationsResponse, NotificationsResponse
+from api.models.telegram_notifier import ConfigurationsResponse, NotificationsResponse, SetTargetPriceResponse, Comparation
 from api.modules.telegram_notifier import TelegramNotifier
 
 
@@ -22,7 +22,15 @@ def router_set_notification(notify_current_price: bool = Query(True, description
                             notify_if_lt_target_price: bool = Query(True, description="Notificação para preço atual MENOR que target.")) -> dict:
     """Configura a ativação/desativação das notificações para BOT Telegram."""
 
-    logger.log('LOG ROTA', "Chamada rota /set_notification")
+    logger.log('LOG ROTA', "Chamada rota /set_notifications")
     return {"notificacoes": TelegramNotifier.set_notifications(notify_current_price=notify_current_price,
                                                                notify_if_gt_target_price=notify_if_gt_target_price,
                                                                notify_if_lt_target_price=notify_if_lt_target_price)}
+
+@router.get('/set_target_price', summary="Configuração de preços alvo.")
+def router_set_notification(comparation_type: Comparation = Query(..., description="Qual tipo de comparação será feita do preço atual com o target price."),
+                            target_price: float = Query(..., description="Preço alvo desejado.")) -> dict:
+    """Configura o preço alvo para comparação"""
+    
+    logger.log('LOG ROTA', "Chamada rota /set_target_price")
+    return {"notificacoes": TelegramNotifier.set_target_price(comparation_type.name, target_price)}
