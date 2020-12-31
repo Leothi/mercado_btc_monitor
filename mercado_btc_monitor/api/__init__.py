@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware
 
-from api.routes import price_monitoring
+from api.routes import message, configuration
 from api.models import DEFAULT_RESPONSES_JSON
 from api.modules.default.middleware import Middleware
 from api.exceptions import ExceptionHandler
@@ -48,9 +48,15 @@ app.add_middleware(
 )
 
 # Rotas
-app.include_router(price_monitoring.router,
-                   prefix='/monitoring',
-                   tags=["BOT Bitcoin"],
+app.include_router(message.router,
+                   prefix='/send',
+                   tags=["Envio de mensagem"],
+                   responses={**DEFAULT_RESPONSES_JSON}
+                   )
+
+app.include_router(configuration.router,
+                   prefix='/cfg',
+                   tags=["Configurações"],
                    responses={**DEFAULT_RESPONSES_JSON}
                    )
 
