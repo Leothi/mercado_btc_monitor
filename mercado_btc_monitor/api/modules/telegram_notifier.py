@@ -141,18 +141,22 @@ class TelegramNotifier:
         :rtype: bool
         """
         if cls.notify_if_lt_target_price:
-            logger.info("Obtendo valores BTC")
-            last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
+            if cls.gt_target_price:
+                logger.info("Obtendo valores BTC")
+                last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
-            if last_price <= cls.lt_target_price:
-                mensagem = make_if_target_price_message(
-                    last_price, cls.lt_target_price)
+                if last_price <= cls.lt_target_price:
+                    mensagem = make_if_target_price_message(
+                        last_price, cls.lt_target_price)
 
-                logger.info("Enviando mensagem para Telegram")
-                response = TelegramAPI.send_message(
-                    chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
+                    logger.info("Enviando mensagem para Telegram")
+                    response = TelegramAPI.send_message(
+                        chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
 
-                return response['ok']
-
+                    return response['ok']
+            else:
+                logger.info("Preço alvo não configurado.")
+                return False
+            
         logger.info("Notificação desativada.")
         return False
