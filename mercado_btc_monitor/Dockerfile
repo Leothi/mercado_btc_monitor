@@ -12,4 +12,6 @@ COPY . /code
 
 RUN pip3 install .
 
+ENV LANG C.UTF-8
+
 CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "api/settings.py", "api:app"]
