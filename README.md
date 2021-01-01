@@ -58,8 +58,8 @@ Em construção.
 
 # Exemplo de funcionamento
 ## Swagger
-![swagger](https://user-images.githubusercontent.com/42444599/103312415-b8bdd680-49fb-11eb-9b8d-0968c64d4fac.png)
+![swagger](https://user-images.githubusercontent.com/42444599/103447287-c5466700-4c67-11eb-8752-21f3c6e639b5.png)
 
 ## Telegram
-![logger](https://user-images.githubusercontent.com/42444599/103312427-c1aea800-49fb-11eb-8fcf-f4ddbb72c1f4.png)
-![price_target](https://user-images.githubusercontent.com/42444599/103312434-c96e4c80-49fb-11eb-92eb-8ced181a612d.png)
+![logger](https://user-images.githubusercontent.com/42444599/103447296-e4dd8f80-4c67-11eb-8a89-561253339120.png)
+![price_target](https://user-images.githubusercontent.com/42444599/103447301-0179c780-4c68-11eb-9053-77d1e086b915.png)

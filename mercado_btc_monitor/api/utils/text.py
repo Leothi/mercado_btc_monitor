@@ -26,14 +26,14 @@ def make_current_price_message(last_price: str, sell_price: str, buy_price: str)
     return message
 
 
-def make_if_target_price_message(last_price: int, target_price: int) -> str:
+def make_if_target_price_message(last_price: float, target_price: float) -> str:
     """Cria mensagem de preço alvo para Telegram.
 
-    :param last_price: Último preço
-    :type last_price: int
+    :param last_price: Último preço.
+    :type last_price: float
     :param target_price: Preço alvo.
-    :type target_price: int
-    :return: Mensagem final
+    :type target_price: float
+    :return: Mensagem final.
     :rtype: str
     """
     last_price = round(float(last_price), 2)
