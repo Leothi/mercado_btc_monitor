@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from loguru import logger
 
-from api.models.telegram_notifier import SendResponse
+from api.models.telegram_notifier import SendResponse, Comparison
 from api.modules.telegram_notifier import TelegramNotifier
 
 router = APIRouter()
@@ -39,3 +39,17 @@ def router_lt_target(disable_notifications: bool = Query(False, description="Not
 
     logger.log('LOG ROTA', "Chamada rota /if_lt_target_price.")
     return {"enviado": TelegramNotifier.send_if_lt_target_price(disable_notifications=disable_notifications)}
+
+@router.get('/if_target_price', response_model=SendResponse, summary="Notificação de valor atual menor que target.")
+def router_target(comparison_type: Comparison = Query(..., description="Qual tipo de comparação será feita entre o preço atual com o target price."),
+                  disable_notifications: bool = Query(False, description="Notificação silenciosa (apenas vibração).")) -> dict:
+    """Compara o valor atual com o Target e notifica via Telegram caso Atual <= Target.
+
+    Ideal para operações de compra.
+
+    Envia somente se a notificação foi ativada e o preço alvo settado.
+    """
+
+    logger.log('LOG ROTA', "Chamada rota /if_target_price.")
+    return {"enviado": TelegramNotifier.send_if_target_price(comparison_type=comparison_type,
+                                                             disable_notifications=disable_notifications)}

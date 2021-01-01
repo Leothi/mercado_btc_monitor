@@ -110,8 +110,6 @@ class TelegramNotifier:
     def send_if_gt_target_price(cls, disable_notifications: bool) -> bool:
         """Envia uma notificação via Telegram caso o preço atual seja maior que o preço target.
 
-        :param target_price: Preço alvo.
-        :type target_price: float
         :param disable_notifications: Notificação silenciosa do Telegram.
         :type disable_notifications: bool
         :return: Se a mensagem foi enviada ou não.
@@ -149,8 +147,6 @@ class TelegramNotifier:
     def send_if_lt_target_price(cls, disable_notifications: bool) -> dict:
         """Envia uma notificação via Telegram caso o preço atual seja menor que o preço target.
 
-        :param target_price: Preço alvo.
-        :type target_price: float
         :param disable_notifications: Notificação silenciosa do Telegram.
         :type disable_notifications: bool
         :return: Se a mensagem foi enviada ou não.
@@ -178,6 +174,57 @@ class TelegramNotifier:
                         
                     return response['ok']
 
+                logger.success("Condicional de comparação não satisfeita.")
+            else:
+                logger.success("Preço alvo não configurado.")
+        else:
+            logger.success("Notificação desativada.")
+        return False
+    
+    
+    @classmethod
+    def send_if_target_price(cls, comparison_type: str, disable_notifications: bool) -> dict:
+        """Envia uma notificação via Telegram caso o preço atual seja menor ou menor que o preço target.
+
+        :param disable_notifications: Notificação silenciosa do Telegram.
+        :type disable_notifications: bool
+        :return: Se a mensagem foi enviada ou não.
+        :rtype: bool
+        """
+        # Atribuindo valores de acordo com o tipo de comparação
+        if comparison_type == "greater_than":
+            target_price = cls.gt_target_price
+            notify = cls.notify_if_gt_target_price
+        elif comparison_type == "lesser_than":
+            target_price = cls.lt_target_price
+            notify = cls.notify_if_lt_target_price
+            
+            # comparison = last_price >= target_price            
+            # comparison = last_price <= cls.lt_target_price
+            
+        logger.debug("Verificando notificação.")
+        if notify:
+            
+            logger.debug("Verificando existência de preço alvo.")
+            if target_price:
+                logger.info("Obtendo valores BTC.")
+                last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
+
+                # Condicional verdadeira
+                if comparison:
+                    mensagem = make_if_target_price_message(
+                        last_price, target_price)
+
+                    logger.info("Enviando mensagem para Telegram.")
+                    response = TelegramAPI.send_message(
+                        chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
+
+                    if response['ok']:
+                        logger.success("Mensagem enviada com sucesso.")
+                        
+                    return response['ok']
+
+                # Condicional falsa
                 logger.success("Condicional de comparação não satisfeita.")
             else:
                 logger.success("Preço alvo não configurado.")
