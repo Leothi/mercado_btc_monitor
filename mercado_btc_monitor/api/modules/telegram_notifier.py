@@ -141,7 +141,7 @@ class TelegramNotifier:
         :rtype: bool
         """
         if cls.notify_if_lt_target_price:
-            if cls.gt_target_price:
+            if cls.lt_target_price:
                 logger.info("Obtendo valores BTC")
                 last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
