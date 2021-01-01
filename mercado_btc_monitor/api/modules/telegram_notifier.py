@@ -108,11 +108,15 @@ class TelegramNotifier:
         :return: Se a mensagem foi enviada ou não.
         :rtype: bool
         """
+        logger.debug("Verificando notificação.")
         if cls.notify_if_gt_target_price:
+
+            logger.debug("Verificando existência de preço alvo.")
             if cls.gt_target_price:
                 logger.info("Obtendo valores BTC")
                 last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
+                # Condicional de comparação
                 if last_price >= cls.gt_target_price:
                     mensagem = make_if_target_price_message(
                         last_price, cls.gt_target_price)
@@ -122,6 +126,8 @@ class TelegramNotifier:
                         chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
 
                     return response['ok']
+
+                logger.info("Condicional de comparação não satisfeita.")
             else:
                 logger.info("Preço alvo não configurado.")
                 return False
@@ -140,11 +146,15 @@ class TelegramNotifier:
         :return: Se a mensagem foi enviada ou não.
         :rtype: bool
         """
+        logger.debug("Verificando notificação.")
         if cls.notify_if_lt_target_price:
+
+            logger.debug("Verificando existência de preço alvo.")
             if cls.lt_target_price:
                 logger.info("Obtendo valores BTC")
                 last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
+                # Condicional de comparação
                 if last_price <= cls.lt_target_price:
                     mensagem = make_if_target_price_message(
                         last_price, cls.lt_target_price)
@@ -154,9 +164,11 @@ class TelegramNotifier:
                         chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
 
                     return response['ok']
+
+                logger.info("Condicional de comparação não satisfeita.")
             else:
                 logger.info("Preço alvo não configurado.")
                 return False
-            
+
         logger.info("Notificação desativada.")
         return False
