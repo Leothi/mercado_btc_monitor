@@ -18,6 +18,17 @@ class TelegramNotifier:
     def set_notifications(cls, notify_current_price: bool,
                           notify_if_gt_target_price: bool,
                           notify_if_lt_target_price: bool) -> dict:
+        """Configura notificações para BOT do Telegram.
+
+        :param notify_current_price: "Notificação de preço atual."
+        :type notify_current_price: bool
+        :param notify_if_gt_target_price: Notificação de preço atual maior que target.
+        :type notify_if_gt_target_price: bool
+        :param notify_if_lt_target_price: "Notificação de preço atual menor que target.
+        :type notify_if_lt_target_price: bool
+        :return: Resumo das configurações de notificação.
+        :rtype: dict
+        """
         logger.info("Modificando configurações de notificação.")
         cls.notify_current_price = notify_current_price
         cls.notify_if_gt_target_price = notify_if_gt_target_price
@@ -27,6 +38,15 @@ class TelegramNotifier:
 
     @classmethod
     def set_target_price(cls, comparison_type: str, target_price: float) -> dict:
+        """Configura preços alvo para monitoração.
+
+        :param comparison_type: Comparação maior que ou menor que.
+        :type comparison_type: str
+        :param target_price: Preço alvo para comparação.
+        :type target_price: float
+        :return: Resumo das configurações de preço alvo.
+        :rtype: dict
+        """
         if comparison_type == "greater_than":
             cls.gt_target_price = target_price
         elif comparison_type == "lesser_than":
@@ -34,7 +54,12 @@ class TelegramNotifier:
         return cls.make_current_cfg_dict()['target_prices']
 
     @classmethod
-    def make_current_cfg_dict(cls):
+    def make_current_cfg_dict(cls) -> dict:
+        """Faz um dicionário contendo todas as configurações de monitoração.
+
+        :return: Configurações de notificação e preços alvo.
+        :rtype: dict
+        """
         configurations = {
             "notificacoes": {
                 "notify_current_price": cls.notify_current_price,
@@ -73,7 +98,7 @@ class TelegramNotifier:
         return False
 
     @classmethod
-    def send_if_gt_target_price(cls, target_price: float, disable_notifications: bool) -> bool:
+    def send_if_gt_target_price(cls, disable_notifications: bool) -> bool:
         """Envia uma notificação via Telegram caso o preço atual seja maior que o preço target.
 
         :param target_price: Preço alvo.
@@ -84,24 +109,28 @@ class TelegramNotifier:
         :rtype: bool
         """
         if cls.notify_if_gt_target_price:
-            logger.info("Obtendo valores BTC")
-            last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
+            if cls.gt_target_price:
+                logger.info("Obtendo valores BTC")
+                last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
-            if last_price >= target_price:
-                mensagem = make_if_target_price_message(
-                    last_price, target_price)
+                if last_price >= cls.gt_target_price:
+                    mensagem = make_if_target_price_message(
+                        last_price, cls.gt_target_price)
 
-                logger.info("Enviando mensagem para Telegram")
-                response = TelegramAPI.send_message(
-                    chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
+                    logger.info("Enviando mensagem para Telegram")
+                    response = TelegramAPI.send_message(
+                        chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
 
-                return response['ok']
+                    return response['ok']
+            else:
+                logger.info("Preço alvo não configurado.")
+                return False
 
         logger.info("Notificação desativada.")
         return False
 
     @classmethod
-    def send_if_lt_target_price(cls, target_price: float, disable_notifications: bool) -> dict:
+    def send_if_lt_target_price(cls, disable_notifications: bool) -> dict:
         """Envia uma notificação via Telegram caso o preço atual seja menor que o preço target.
 
         :param target_price: Preço alvo.
@@ -115,9 +144,9 @@ class TelegramNotifier:
             logger.info("Obtendo valores BTC")
             last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
-            if last_price <= target_price:
+            if last_price <= cls.lt_target_price:
                 mensagem = make_if_target_price_message(
-                    last_price, target_price)
+                    last_price, cls.lt_target_price)
 
                 logger.info("Enviando mensagem para Telegram")
                 response = TelegramAPI.send_message(

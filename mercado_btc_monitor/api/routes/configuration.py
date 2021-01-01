@@ -30,9 +30,14 @@ def router_set_notification(notify_current_price: bool = Query(True, description
 
 
 @router.get('/set_target_price', response_model=SetTargetPriceResponse, summary="Configuração de preços alvo.")
-def router_set_target_price(comparation_type: Comparation = Query(..., description="Qual tipo de comparação será feita do preço atual com o target price."),
+def router_set_target_price(comparation_type: Comparation = Query(..., description="Qual tipo de comparação será feita entre o preço atual com o target price."),
                             target_price: float = Query(..., description="Preço alvo desejado.")) -> dict:
-    """Configura o preço alvo para comparação"""
+    """Configura o preço alvo para comparação com o preço atual.
+
+    lesser_than: preço atual MENOR que target.
+
+    greater_than: preço atual MAIOR que target.
+    """
 
     logger.log('LOG ROTA', "Chamada rota /set_target_price")
     return {"target_prices": TelegramNotifier.set_target_price(comparation_type.name, target_price)}

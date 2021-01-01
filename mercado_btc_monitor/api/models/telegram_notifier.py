@@ -30,16 +30,21 @@ class NotificationsResponse(SuccessResponse):
 
 
 class TargetPrice(BaseModel):
-    gt_target_price: FloatOrNone = Field(..., description="asd")
-    lt_target_price: FloatOrNone
+    """Base model for /set_target_price on /cfg prefix"""
+    gt_target_price: FloatOrNone = Field(...,
+                                         description="Preço alvo para greater_than target")
+    lt_target_price: FloatOrNone = Field(...,
+                                         description="Preço alvo para lesser_than target")
 
 
 class Comparation(str, Enum):
+    """Enum model for /set_target_price on /cfg prefix"""
     greater_than = 'greater_than'
     lesser_than = 'lesser_than'
 
 
 class SetTargetPriceResponse(SuccessResponse):
+    """Response model to /set_target_price on /cfg prefix"""
     target_prices: TargetPrice
 
 
