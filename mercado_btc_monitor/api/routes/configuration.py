@@ -12,7 +12,7 @@ router = APIRouter()
 def router_get_notification() -> dict:
     """Lista todas as configurações do BOT Telegram."""
 
-    logger.log('LOG ROTA', "Chamada rota /get_all")
+    logger.log('LOG ROTA', "Chamada rota /get_all.")
     return {"configuracoes": TelegramNotifier.make_current_cfg_dict()}
 
 
@@ -23,7 +23,7 @@ def router_set_notification(notify_current_price: bool = Query(True, description
                             notify_if_lt_target_price: bool = Query(True, description="Notificação para preço atual MENOR que target.")) -> dict:
     """Configura a ativação/desativação das notificações para BOT Telegram."""
 
-    logger.log('LOG ROTA', "Chamada rota /set_notifications")
+    logger.log('LOG ROTA', "Chamada rota /set_notifications.")
     return {"notificacoes": TelegramNotifier.set_notifications(notify_current_price=notify_current_price,
                                                                notify_if_gt_target_price=notify_if_gt_target_price,
                                                                notify_if_lt_target_price=notify_if_lt_target_price)}
@@ -39,5 +39,5 @@ def router_set_target_price(comparation_type: Comparation = Query(..., descripti
     greater_than: preço atual MAIOR que target.
     """
 
-    logger.log('LOG ROTA', "Chamada rota /set_target_price")
+    logger.log('LOG ROTA', "Chamada rota /set_target_price.")
     return {"target_prices": TelegramNotifier.set_target_price(comparation_type.name, target_price)}

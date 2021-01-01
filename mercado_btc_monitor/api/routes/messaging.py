@@ -11,7 +11,7 @@ router = APIRouter()
 def router_current(disable_notifications: bool = Query(True, description="Notificação silenciosa (apenas vibração).")) -> dict:
     """Retorna os valores atuais de compra, venda e último valor da BTC. Envia os valores para o chat cadastrado via Telegram. """
 
-    logger.log('LOG ROTA', "Chamada rota /current_price")
+    logger.log('LOG ROTA', "Chamada rota /current_price.")
     return {"enviado": TelegramNotifier.send_current_price(disable_notifications=disable_notifications)}
 
 
@@ -24,7 +24,7 @@ def router_gt_target(disable_notifications: bool = Query(False, description="Not
     Envia somente se a notificação foi ativada e o preço alvo settado.
     """
 
-    logger.log('LOG ROTA', "Chamada rota /if_gt_target_price")
+    logger.log('LOG ROTA', "Chamada rota /if_gt_target_price.")
     return {"enviado": TelegramNotifier.send_if_gt_target_price(disable_notifications=disable_notifications)}
 
 
@@ -37,5 +37,5 @@ def router_lt_target(disable_notifications: bool = Query(False, description="Not
     Envia somente se a notificação foi ativada e o preço alvo settado.
     """
 
-    logger.log('LOG ROTA', "Chamada rota /if_lt_target_price")
+    logger.log('LOG ROTA', "Chamada rota /if_lt_target_price.")
     return {"enviado": TelegramNotifier.send_if_lt_target_price(disable_notifications=disable_notifications)}

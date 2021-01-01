@@ -30,10 +30,12 @@ class TelegramNotifier:
         :rtype: dict
         """
         logger.info("Modificando configurações de notificação.")
+        
         cls.notify_current_price = notify_current_price
         cls.notify_if_gt_target_price = notify_if_gt_target_price
         cls.notify_if_lt_target_price = notify_if_lt_target_price
 
+        logger.success("Notificações modificadas.")    
         return cls.make_current_cfg_dict()['notificacoes']
 
     @classmethod
@@ -47,10 +49,14 @@ class TelegramNotifier:
         :return: Resumo das configurações de preço alvo.
         :rtype: dict
         """
+        logger.info(f"Ajustando preço limite para '{comparison_type}'.")
+        
         if comparison_type == "greater_than":
             cls.gt_target_price = target_price
         elif comparison_type == "lesser_than":
             cls.lt_target_price = target_price
+            
+        logger.success("Preço ajustado.")    
         return cls.make_current_cfg_dict()['target_prices']
 
     @classmethod
@@ -70,7 +76,7 @@ class TelegramNotifier:
                 "gt_target_price": cls.gt_target_price,
                 "lt_target_price": cls.lt_target_price,
             }
-        }
+        }        
         return configurations
 
     @classmethod
@@ -82,8 +88,9 @@ class TelegramNotifier:
         :return: Se a mensagem foi enviada ou não.
         :rtype: bool
         """
+        logger.debug("Verificando notificação.")
         if cls.notify_current_price:
-            logger.info("Obtendo valores BTC")
+            logger.info("Obtendo valores BTC.")
             ticker = BTCDataAPI.get_ticker()['ticker']
 
             logger.info("Enviando mensagem para Telegram")
@@ -91,10 +98,12 @@ class TelegramNotifier:
                 ticker['last'], ticker['sell'], ticker['buy'])
             response = TelegramAPI.send_message(chat_id=envs.LOGGER_CHAT_ID, message=mensagem,
                                                 disable_notifications=disable_notifications)
-
+            if response['ok']:
+                logger.success("Mensagem enviada com sucesso.")
+                        
             return response['ok']
 
-        logger.info("Notificação desativada.")
+        logger.success("Notificação desativada.")
         return False
 
     @classmethod
@@ -113,7 +122,7 @@ class TelegramNotifier:
 
             logger.debug("Verificando existência de preço alvo.")
             if cls.gt_target_price:
-                logger.info("Obtendo valores BTC")
+                logger.info("Obtendo valores BTC.")
                 last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
                 # Condicional de comparação
@@ -121,18 +130,19 @@ class TelegramNotifier:
                     mensagem = make_if_target_price_message(
                         last_price, cls.gt_target_price)
 
-                    logger.info("Enviando mensagem para Telegram")
+                    logger.info("Enviando mensagem para Telegram.")
                     response = TelegramAPI.send_message(
                         chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
 
+                    if response['ok']:
+                        logger.success("Mensagem enviada com sucesso.")
                     return response['ok']
 
-                logger.info("Condicional de comparação não satisfeita.")
+                logger.success("Condicional de comparação não satisfeita.")
             else:
-                logger.info("Preço alvo não configurado.")
-                return False
-
-        logger.info("Notificação desativada.")
+                logger.success("Preço alvo não configurado.")
+        else:
+            logger.success("Notificação desativada.")
         return False
 
     @classmethod
@@ -151,7 +161,7 @@ class TelegramNotifier:
 
             logger.debug("Verificando existência de preço alvo.")
             if cls.lt_target_price:
-                logger.info("Obtendo valores BTC")
+                logger.info("Obtendo valores BTC.")
                 last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
 
                 # Condicional de comparação
@@ -159,16 +169,19 @@ class TelegramNotifier:
                     mensagem = make_if_target_price_message(
                         last_price, cls.lt_target_price)
 
-                    logger.info("Enviando mensagem para Telegram")
+                    logger.info("Enviando mensagem para Telegram.")
                     response = TelegramAPI.send_message(
                         chat_id=envs.TARGET_CHAT_ID, message=mensagem, disable_notifications=disable_notifications)
 
+                    if response['ok']:
+                        logger.success("Mensagem enviada com sucesso.")
+                        
                     return response['ok']
 
-                logger.info("Condicional de comparação não satisfeita.")
+                logger.success("Condicional de comparação não satisfeita.")
             else:
-                logger.info("Preço alvo não configurado.")
-                return False
-
-        logger.info("Notificação desativada.")
+                logger.success("Preço alvo não configurado.")
+        else:
+            logger.success("Notificação desativada.")
         return False
+ 
