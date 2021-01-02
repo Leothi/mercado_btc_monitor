@@ -37,7 +37,7 @@ class TargetPrice(BaseModel):
                                          description="Preço alvo para lesser_than target")
 
 
-class Comparation(str, Enum):
+class Comparison(str, Enum):
     """Enum model for /set_target_price on /cfg prefix"""
     greater_than = 'greater_than'
     lesser_than = 'lesser_than'
