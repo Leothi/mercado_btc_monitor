@@ -4,8 +4,8 @@ Monitor de preços de BTC na corretora Mercado Bitcoin.
 Em construção.
 
 # Features atuais
-1) Logger de preço atual;
-2) Notificação para preço target (maior ou menor que atual);
+1) Logger de preço atual.
+2) Notificação para preço target (maior ou menor que atual).
 3) Mensagem periódica de BOT via Telegram para as opções acima.
 
 
@@ -17,7 +17,7 @@ Em construção.
 
 
 # Como utilizar via GCP
-* Necessário conhecimento prévio na ferramenta;
+* Necessário conhecimento prévio na ferramenta.
 * Criar arquivo `app.yaml` no mesmo diretório do Dockerfile com *runtime* e *env* necessários para Dockerfile, *env_variables* com as mesmas variáveis de ambiente citadas acima e número máximo de instâncias = 1, visto que algo maior que esse número pode causar divergência entre os atributos de configuração da classe salvos em memória. Exemplo:
 
     ```yaml
@@ -32,14 +32,14 @@ Em construção.
     ```
 * Obs.: não é obrigatório usar dois IDs diferentes para os chats. Pode ser feito somente para separar as funções, controlar separadamente as notificações no celular, etc. Caso queria utilizar o mesmo chat, colocar o ID igual para as duas varíaveis de ambiente.
 
-* Fazer deploy com App Engine (`gcloud app deploy` no diretório do `app.yaml`;
+* Fazer deploy com App Engine (`gcloud app deploy` no diretório do `app.yaml`.
 * Setar crons via Cloud Scheduler para os endpoints desejados.
 
 
 # Como utilizar localmente
-* Opção Docker: buildar imagem via Dockerfile depois rodar container publicando na porta 8080;
-* Opção sem Docker: instalar pacote via `setup.py`, rodar a aplicação com `run.sh` ou `run_uvicorn.sh`;
-* Aplicação roda em `0.0.0.0:8080/docs` por padrão;
+* Opção Docker: buildar imagem via Dockerfile depois rodar container publicando na porta 8080.
+* Opção sem Docker: instalar pacote via `setup.py`, rodar a aplicação com `run.sh` ou `run_uvicorn.sh`.
+* Aplicação roda em `0.0.0.0:8080/docs` por padrão.
 * Na opção local, a notificação periódica via Telegram é desabilitada.
 * Alterar as seguintes váriáveis de ambiente (recomendado utilizar arquivo `.env` no mesmo diretório de `settings.py`):
     ```.env
