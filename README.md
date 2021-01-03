@@ -12,7 +12,7 @@ Em construção.
 # Pré-requisitos para BOT Telegram
 * Criar BOT via @BOTFather;
 * Obter token do BOT;
-* Obter chat_id(s) para conversa(s) com o BOT.
+* Obter chat_id(s) para conversa(s) com o BOT (`https://api.telegram.org/<bot_token>/getUpdates`).
 
 
 # Como utilizar via GCP
