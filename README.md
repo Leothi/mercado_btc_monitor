@@ -17,7 +17,7 @@ Em construção.
 
 # Como utilizar via GCP
 * Necessário conhecimento prévio na ferramenta;
-* Criar arquivo `app.yaml` no mesmo diretório do Dockerfile com *runtime* e *env* necessários para Dockerfile e *env_variables* com as mesmas variáveis de ambiente citadas acima. Exemplo:
+* Criar arquivo `app.yaml` no mesmo diretório do Dockerfile com *runtime* e *env* necessários para Dockerfile, *env_variables* com as mesmas variáveis de ambiente citadas acima e número máximo de instâncias = 1, visto que algo maior que esse número pode causar divergência entre os atributos de configuração da classe salvos em memória. Exemplo:
 
     ```yaml
     runtime: custom
@@ -26,9 +26,11 @@ Em construção.
         BOT_TOKEN: '<token do bot criado>'
         LOGGER_CHAT_ID: '<chat_id para logging do preço atual>'
         TARGET_CHAT_ID: '<chat_id para alerta de target price>'
+    automatic_scaling:
+        max_num_instances: 1
     ```
 
-* Fazer deploy com a ferramenta desejada (feito pelo App Engine);
+* Fazer deploy com App Engine (`gcloud app deploy` no diretório do `app.yaml`;
 * Setar crons via Cloud Scheduler para os endpoints desejados.
 
 
@@ -42,6 +44,7 @@ Em construção.
     BOT_TOKEN = '<token do bot criado>'
     LOGGER_CHAT_ID = '<chat_id para logging do preço atual>'
     TARGET_CHAT_ID = '<chat_id para alerta de target price>'
+    
     ```
 
 
@@ -58,7 +61,7 @@ Em construção.
 
 # Exemplo de funcionamento
 ## Swagger
-![swagger](https://user-images.githubusercontent.com/42444599/103447287-c5466700-4c67-11eb-8752-21f3c6e639b5.png)
+![swagger](https://user-images.githubusercontent.com/42444599/103489978-6ca5d400-4df7-11eb-859f-e23d9bbc3cba.png)
 
 ## Telegram
 ![logger](https://user-images.githubusercontent.com/42444599/103447296-e4dd8f80-4c67-11eb-8a89-561253339120.png)
