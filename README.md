@@ -10,9 +10,10 @@ Em construção.
 
 
 # Pré-requisitos para BOT Telegram
-* Criar BOT via @BOTFather;
-* Obter token do BOT;
-* Obter chat_id(s) para conversa(s) com o BOT (`https://api.telegram.org/<bot_token>/getUpdates`).
+* Criar BOT via @BOTFather e pegar seu token:
+    https://medium.com/shibinco/create-a-telegram-bot-using-botfather-and-get-the-api-token-900ba00e0f39
+* Obter chat_id(s) para conversa(s) com o BOT:
+    https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id
 
 
 # Como utilizar via GCP
@@ -29,6 +30,7 @@ Em construção.
     automatic_scaling:
         max_num_instances: 1
     ```
+* Obs.: não é obrigatório usar dois IDs diferentes para os chats. Pode ser feito somente para separar as funções, controlar separadamente as notificações no celular, etc. Caso queria utilizar o mesmo chat, colocar o ID igual para as duas varíaveis de ambiente.
 
 * Fazer deploy com App Engine (`gcloud app deploy` no diretório do `app.yaml`;
 * Setar crons via Cloud Scheduler para os endpoints desejados.
@@ -43,9 +45,9 @@ Em construção.
     ```.env
     BOT_TOKEN = '<token do bot criado>'
     LOGGER_CHAT_ID = '<chat_id para logging do preço atual>'
-    TARGET_CHAT_ID = '<chat_id para alerta de target price>'
-    
+    TARGET_CHAT_ID = '<chat_id para alerta de target price>'  
     ```
+* Obs.: não é obrigatório usar dois IDs diferentes para os chats. Pode ser feito somente para separar as funções, controlar separadamente as notificações no celular, etc. Caso queria utilizar o mesmo chat, colocar o ID igual para as duas varíaveis de ambiente.
 
 
 # Algumas ferramentas utilizadas na construção
