@@ -19,6 +19,7 @@ class EnvironmentVariables(BaseSettings):
     if ENVIRONMENT == EnvironmentEnum.LOCAL.name:
         from dotenv import load_dotenv  # noqa
         load_dotenv()
+        print('env')
     else:
         pass
 
