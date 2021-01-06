@@ -1,7 +1,6 @@
 import uvicorn
 
 from api.settings import envs
-from api.services.telegram.bot import TelegramBOT
 
 
 def start():
@@ -11,6 +10,4 @@ def start():
 
 
 if __name__ == '__main__':
-    bot = TelegramBOT()
-    bot.setup()
-    # start()
+    start()

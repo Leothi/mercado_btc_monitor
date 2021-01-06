@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware
 
+from api.services.telegram.bot import TelegramBOT
 from api.routes import messaging, configuration
 from api.models import DEFAULT_RESPONSES_JSON
 from api.modules.default.middleware import Middleware
@@ -63,3 +64,4 @@ app.include_router(configuration.router,
 # Módulos da API
 Middleware(app)
 ExceptionHandler(app)
+TelegramBOT()
