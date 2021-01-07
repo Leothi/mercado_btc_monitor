@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from loguru import logger
 
 from api.models.telegram_notifier import ConfigurationsResponse, NotificationsResponse, SetTargetPriceResponse, Comparison
-from api.modules.telegram_notifier import TelegramNotifier
+from api.services.telegram.telegram_notifier import TelegramNotifier
 
 
 router = APIRouter()

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from loguru import logger
 
 from api.models.telegram_notifier import SendResponse, Comparison
-from api.services.telegram.bot import TelegramBOT
+from api.services.telegram.telegram_notifier import TelegramNotifier
 
 router = APIRouter()
 
@@ -12,7 +12,7 @@ def router_current(disable_notification: bool = Query(True, description="Notific
     """Retorna os valores atuais de compra, venda e último valor da BTC. Envia os valores para o chat cadastrado via Telegram. """
 
     logger.log('LOG ROTA', "Chamada rota /current_price.")
-    return {"enviado": TelegramBOT.send_current_price(disable_notification=disable_notification)}
+    return {"enviado": TelegramNotifier.send_current_price(disable_notification=disable_notification)}
 
 
 @router.get('/if_target_price', response_model=SendResponse, summary="Notificação de valor atual menor ou maior que target.")
@@ -24,5 +24,5 @@ def router_target(comparison_type: Comparison = Query(..., description="Qual tip
     """
 
     logger.log('LOG ROTA', "Chamada rota /if_target_price.")
-    return {"enviado": TelegramBOT.send_if_target_price(comparison_type=comparison_type,
-                                                          disable_notification=disable_notification)}
+    return {"enviado": TelegramNotifier.send_if_target_price(comparison_type=comparison_type,
+                                                             disable_notification=disable_notification)}
