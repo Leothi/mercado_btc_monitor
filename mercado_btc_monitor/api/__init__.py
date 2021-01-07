@@ -4,11 +4,11 @@ from fastapi import FastAPI
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware
 
+from api.settings import envs
 from api.routes import messaging, configuration
 from api.models import DEFAULT_RESPONSES_JSON
 from api.modules.default.middleware import Middleware
 from api.exceptions import ExceptionHandler
-from api.settings import envs
 
 __version__ = '1.0.1'
 

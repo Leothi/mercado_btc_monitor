@@ -2,6 +2,7 @@ import os
 
 from pydantic import BaseSettings
 from enum import Enum
+from dotenv import load_dotenv, find_dotenv
 
 from api.utils.logger import DEFAULT_FORMAT
 
@@ -16,11 +17,8 @@ class EnvironmentEnum(Enum):
 class EnvironmentVariables(BaseSettings):
     ENVIRONMENT: EnvironmentEnum = 'LOCAL'
 
-    if ENVIRONMENT == EnvironmentEnum.LOCAL.name:
-        from dotenv import load_dotenv  # noqa
+    if find_dotenv():
         load_dotenv()
-    else:
-        pass
 
     # FastAPI
     FASTAPI_HOST: str = '0.0.0.0'
@@ -30,8 +28,7 @@ class EnvironmentVariables(BaseSettings):
 
     # Logger
     LOGGER_SWAGGER: bool = False
-    LOGGER_IGNORE: str = '/docs /redoc /openapi.json /metrics /health /favicon.ico \
-        / /# /_static/perfil_ico.png /_static/perfil.png'
+    LOGGER_IGNORE: str = '/docs /redoc /openapi.json /metrics /health'
     LOGURU_FORMAT: str = DEFAULT_FORMAT
     LOG_LOCAL: bool = False
 

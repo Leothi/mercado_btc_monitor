@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  api:
+    build:
+      context: ./mercado_btc_monitor
+      dockerfile: Dockerfile
+    volumes:
+      - ./mercado_btc_monitor:/code
+    environment:
+      LOG_LOCAL: "True" # Desabilita logging externo de IP, id
+      LOGGER_SWAGGER: "False" # Desabilita logging para /docs /favicon etc
+      # Apenas para uvicorn
+      LC_ALL: "C.UTF-8"
+      LANG: "C.UTF-8"
+      FASTAPI_RELOAD: "True"
+    command: /bin/sh run_uvicorn.sh # Uvicorn sh - funciona reload
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+
+  bot:
+    build:
+      context: ./telegram_bot
+      dockerfile: Dockerfile
+    volumes:
+      - ./telegram_bot:/code
+    ports:
+      - 8000:8000
+    networks:
+      - backend
+    depends_on: 
+      - api
+
+networks:
+  backend:
+    driver: bridge

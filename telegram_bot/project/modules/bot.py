@@ -1,5 +1,5 @@
 import requests
-
+from loguru import logger
 from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackContext, CallbackQueryHandler
 
@@ -8,7 +8,7 @@ from project.settings import envs
 
 class TelegramBOT:
     _CURRENT_PRICE_URL = envs.API_BASE_URL + envs.CURRENT_PRICE_ENDPOINT
-    
+
     @staticmethod
     def _price(update: Update, context: CallbackContext):
         keyboard = [
@@ -28,10 +28,12 @@ class TelegramBOT:
         query.answer()
 
         if query.data == 'current':
+
+            logger.info(f"Enviando request para {cls._CURRENT_PRICE_URL}")
             requests.get(cls._CURRENT_PRICE_URL)
             text = "Preço atual."
         else:
-            text='Preço alvo'
+            text = 'Preço alvo'
         query.edit_message_text(text=text)
 
     @staticmethod

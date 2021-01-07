@@ -160,10 +160,10 @@ class TelegramNotifier:
                         last_price, target_price)
 
                     logger.info("Enviando mensagem para Telegram.")
-                    response = cls._bot.send_message(chat_id=envs.TARGET_CHAT_ID,
-                                                     text=message,
-                                                     disable_notification=disable_notification,
-                                                     parse_mode=envs.PARSE_MODE)
+                    cls._bot.send_message(chat_id=envs.TARGET_CHAT_ID,
+                                          text=message,
+                                          disable_notification=disable_notification,
+                                          parse_mode=envs.PARSE_MODE)
 
                     logger.success("Mensagem enviada com sucesso.")
                     return True
