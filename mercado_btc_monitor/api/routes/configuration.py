@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Query
 from loguru import logger
 
-from api.models.telegram_notifier import ConfigurationsResponse, NotificationsResponse, SetTargetPriceResponse, Comparison
+from api.models.telegram_notifier import (ConfigurationsResponse, NotificationsResponse,
+                                          SetTargetPriceResponse, Comparison)
 from api.services.telegram.telegram_notifier import TelegramNotifier
 
 
@@ -18,9 +19,10 @@ def router_get_notification() -> dict:
 
 @router.get('/set_notifications', response_model=NotificationsResponse, summary="Configuração de notificações.")
 def router_set_notification(notify_current_price: bool = Query(True, description="Notificação de preço atual."),
-                            notify_if_gt_target_price: bool = Query(
-                                True, description="Notificação para preço atual MAIOR que target."),
-                            notify_if_lt_target_price: bool = Query(True, description="Notificação para preço atual MENOR que target.")) -> dict:
+                            notify_if_gt_target_price: bool = Query(True,
+                                                                    description="Notificação para preço atual > target."),
+                            notify_if_lt_target_price: bool = Query(True,
+                                                                    description="Notificação para preço atual < target.")) -> dict:
     """Configura a ativação/desativação das notificações para BOT Telegram."""
 
     logger.log('LOG ROTA', "Chamada rota /set_notifications.")
@@ -30,7 +32,8 @@ def router_set_notification(notify_current_price: bool = Query(True, description
 
 
 @router.get('/set_target_price', response_model=SetTargetPriceResponse, summary="Configuração de preços alvo.")
-def router_set_target_price(comparison_type: Comparison = Query(..., description="Qual tipo de comparação será feita entre o preço atual com o target price."),
+def router_set_target_price(comparison_type: Comparison = Query(...,
+                                                                description="Tipo de comparação entre o preço atual e target."),
                             target_price: float = Query(..., description="Preço alvo desejado.")) -> dict:
     """Configura o preço alvo para comparação com o preço atual.
 

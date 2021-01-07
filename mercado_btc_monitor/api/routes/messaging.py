@@ -7,18 +7,25 @@ from api.services.telegram.telegram_notifier import TelegramNotifier
 router = APIRouter()
 
 
-@router.get('/current_price', response_model=SendResponse, summary="Relatório de valores atuais da BTC.")
-def router_current(disable_notification: bool = Query(True, description="Notificação silenciosa (apenas vibração).")) -> dict:
-    """Retorna os valores atuais de compra, venda e último valor da BTC. Envia os valores para o chat cadastrado via Telegram. """
+@router.get('/current_price', response_model=SendResponse,
+            summary="Relatório de valores atuais da BTC.")
+def router_current(disable_notification: bool = Query(True,
+                                                      description="Notificação silenciosa (apenas vibração).")) -> dict:
+    """Retorna os valores atuais de compra, venda e último valor da BTC.
+    Envia os valores para o chat cadastrado via Telegram. """
 
     logger.log('LOG ROTA', "Chamada rota /current_price.")
     return {"enviado": TelegramNotifier.send_current_price(disable_notification=disable_notification)}
 
 
-@router.get('/if_target_price', response_model=SendResponse, summary="Notificação de valor atual menor ou maior que target.")
-def router_target(comparison_type: Comparison = Query(..., description="Qual tipo de comparação será feita entre o preço atual com o target price."),
-                  disable_notification: bool = Query(False, description="Notificação silenciosa (apenas vibração).")) -> dict:
-    """Compara o valor atual com o Target e notifica via Telegram caso Atual <= Target ou Atual >= Target dependendo do tipo de comparação.
+@router.get('/if_target_price', response_model=SendResponse,
+            summary="Notificação de valor atual menor ou maior que target.")
+def router_target(comparison_type: Comparison = Query(...,
+                                                      description="Tipo de comparação entre o preço atual e target."),
+                  disable_notification: bool = Query(False,
+                                                     description="Notificação silenciosa (apenas vibração).")) -> dict:
+    """Compara o valor atual com o Target
+    e notifica via Telegram caso Atual <= Target ou Atual >= Target dependendo do tipo de comparação.
 
     Envia somente se a notificação foi ativada e o preço alvo settado.
     """

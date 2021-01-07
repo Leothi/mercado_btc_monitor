@@ -89,8 +89,8 @@ class TelegramNotifier:
     def send_current_price(cls, disable_notification: bool = False) -> bool:
         """Envia preço atual (último, venda e compra) via Telegram.
 
-        :param disable_notifications: Notificação silenciosa do Telegram.
-        :type disable_notifications: bool
+        :param disable_notification: Notificação silenciosa do Telegram.
+        :type disable_notification: bool
         :return: Se a mensagem foi enviada ou não.
         :rtype: bool
         """
@@ -104,12 +104,11 @@ class TelegramNotifier:
                 ticker['last'], ticker['sell'], ticker['buy'])
 
             cls._bot.send_message(chat_id=envs.TARGET_CHAT_ID,
-                                 text=message,
-                                 disable_notification=disable_notification,
-                                 parse_mode=envs.PARSE_MODE)
+                                  text=message,
+                                  disable_notification=disable_notification,
+                                  parse_mode=envs.PARSE_MODE)
 
             logger.success("Mensagem enviada com sucesso.")
-
             return True
 
         logger.success("Notificação desativada.")
@@ -121,8 +120,8 @@ class TelegramNotifier:
 
         :param comparison_type: Tipo de comparação com o preço atual.
         :type comparison_type: str
-        :param disable_notifications: Notificação silenciosa do Telegram.
-        :type disable_notifications: bool
+        :param disable_notification: Notificação silenciosa do Telegram.
+        :type disable_notification: bool
         :return: Se a mensagem foi enviada ou não.
         :rtype: bool
         """
@@ -162,14 +161,12 @@ class TelegramNotifier:
 
                     logger.info("Enviando mensagem para Telegram.")
                     response = cls._bot.send_message(chat_id=envs.TARGET_CHAT_ID,
-                                                                 text=message,
-                                                                 disable_notification=disable_notification,
-                                                                 parse_mode=envs.PARSE_MODE)
+                                                     text=message,
+                                                     disable_notification=disable_notification,
+                                                     parse_mode=envs.PARSE_MODE)
 
-                    if response['ok']:
-                        logger.success("Mensagem enviada com sucesso.")
-
-                        return response['ok']
+                    logger.success("Mensagem enviada com sucesso.")
+                    return True
 
             else:
                 logger.success("Preço alvo não configurado.")

@@ -1,6 +1,4 @@
-import uvicorn
-
-from api.settings import envs
+from project.modules.bot import TelegramBOT
 
 if __name__ == "__main__":
     bot = TelegramBOT
