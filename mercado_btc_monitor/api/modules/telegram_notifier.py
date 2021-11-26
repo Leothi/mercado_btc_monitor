@@ -80,7 +80,7 @@ class TelegramNotifier:
         return configurations
 
     @classmethod
-    def send_current_price(cls, disable_notifications: bool) -> bool:
+    def send_current_price(cls, disable_notifications: bool, cripto: str) -> bool:
         """Envia preço atual (último, venda e compra) via Telegram.
 
         :param disable_notifications: Notificação silenciosa do Telegram.
@@ -90,12 +90,12 @@ class TelegramNotifier:
         """
         logger.debug("Verificando notificação.")
         if cls.notify_current_price:
-            logger.info("Obtendo valores BTC.")
-            ticker = BTCDataAPI.get_ticker()['ticker']
+            logger.info(f"Obtendo valores {cripto}.")
+            ticker = BTCDataAPI.get_ticker(cripto)['ticker']
 
             logger.info("Enviando mensagem para Telegram")
             message = make_current_price_message(
-                ticker['last'], ticker['sell'], ticker['buy'])
+                cripto, ticker['last'], ticker['sell'], ticker['buy'])
             response = TelegramAPI.send_message(chat_id=envs.LOGGER_CHAT_ID, message=message,
                                                 disable_notifications=disable_notifications)
             if response['ok']:
@@ -107,7 +107,7 @@ class TelegramNotifier:
         return False
 
     @classmethod
-    def send_if_target_price(cls, comparison_type: str, disable_notifications: bool) -> bool:
+    def send_if_target_price(cls, comparison_type: str, disable_notifications: bool, cripto: str) -> bool:
         """Envia uma notificação via Telegram caso o preço atual seja menor ou menor que o preço target.
 
         :param comparison_type: Tipo de comparação com o preço atual.
@@ -132,8 +132,8 @@ class TelegramNotifier:
 
             logger.debug("Verificando existência de preço alvo.")
             if target_price:
-                logger.info("Obtendo valores BTC.")
-                last_price = float(BTCDataAPI.get_ticker()['ticker']['last'])
+                logger.info(f"Obtendo valores {cripto}.")
+                last_price = float(BTCDataAPI.get_ticker(cripto)['ticker']['last'])
 
                 comparison = last_price >= target_price
 
@@ -149,7 +149,7 @@ class TelegramNotifier:
                 # Envia mensagem caso condicional verdadeira
                 if send_message:
                     message = make_if_target_price_message(
-                        last_price, target_price)
+                        cripto, last_price, target_price)
 
                     logger.info("Enviando mensagem para Telegram.")
                     response = TelegramAPI.send_message(

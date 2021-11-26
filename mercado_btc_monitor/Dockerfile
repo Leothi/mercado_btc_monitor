@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM python:3.8-buster
 
 WORKDIR /code
 
@@ -14,4 +14,4 @@ RUN pip3 install .
 
 ENV LANG C.UTF-8
 
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "api/settings.py", "api:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "api/settings.py", "api.app:get_app()"]

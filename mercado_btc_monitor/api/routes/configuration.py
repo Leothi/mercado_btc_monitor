@@ -1,18 +1,18 @@
 from fastapi import APIRouter, Query
 from loguru import logger
 
-from api.models.telegram_notifier import ConfigurationsResponse, NotificationsResponse, SetTargetPriceResponse, Comparison
+from api.schemas.telegram_notifier import ConfigurationsResponse, NotificationsResponse, SetTargetPriceResponse, Comparison
 from api.modules.telegram_notifier import TelegramNotifier
 
 
 router = APIRouter()
 
 
-@router.get('/get_all', response_model=ConfigurationsResponse, summary="Listagem das configurações.")
+@router.get('/list', response_model=ConfigurationsResponse, summary="Listagem das configurações.")
 def router_get_notification() -> dict:
     """Lista todas as configurações do BOT Telegram."""
 
-    logger.log('LOG ROTA', "Chamada rota /get_all.")
+    logger.log('LOG ROTA', "Chamada rota /list.")
     return {"configuracoes": TelegramNotifier.make_current_cfg_dict()}
 
 

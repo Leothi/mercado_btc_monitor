@@ -2,7 +2,7 @@ from enum import Enum
 from pydantic import BaseModel, Field
 from typing import Dict, Union, TypeVar
 
-from api.models import SuccessResponse
+from api.schemas import SuccessResponse
 
 
 FloatOrNone = TypeVar('IntOrNone', float, None)
@@ -43,13 +43,19 @@ class Comparison(str, Enum):
     lesser_than = 'lesser_than'
 
 
+class Cripto(str, Enum):
+    """Enum model for /send prefix"""
+    BTC = 'BTC'
+    ETH = 'ETH'
+
+
 class SetTargetPriceResponse(SuccessResponse):
     """Response model to /set_target_price on /cfg prefix"""
     target_prices: TargetPrice
 
 
 class ConfigurationsResponse(SuccessResponse):
-    """Response model to /get_all on /cfg prefix"""
+    """Response model to /list on /cfg prefix"""
     configuracoes: Dict[str, Union[Notifications, TargetPrice]]
 
     class Config:

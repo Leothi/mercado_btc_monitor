@@ -1,4 +1,4 @@
-def make_current_price_message(last_price: str, sell_price: str, buy_price: str) -> str:
+def make_current_price_message(cripto: str, last_price: str, sell_price: str, buy_price: str) -> str:
     """Cria mensagem de preço atual para Telegram.
 
     :param last_price: Último preço.
@@ -14,6 +14,7 @@ def make_current_price_message(last_price: str, sell_price: str, buy_price: str)
     sell_price = round(float(sell_price), 1)
     buy_price = round(float(buy_price), 1)
 
+    cripto = f"*Cripto:* {cripto :>15}"
     last = f"*Último*: {last_price :>15}"
     sell = f"*Venda*: {sell_price :>16}"
     buy = f"*Compra*: {buy_price :>13}"
@@ -22,11 +23,11 @@ def make_current_price_message(last_price: str, sell_price: str, buy_price: str)
     sell = f"*Venda*: {sell_price :>13}"
     buy = f"*Compra*: {buy_price :>10}"
 
-    message = '\n'.join([last, sell, buy])
+    message = '\n'.join([cripto, last, sell, buy])
     return message
 
 
-def make_if_target_price_message(last_price: float, target_price: float) -> str:
+def make_if_target_price_message(cripto: str, last_price: float, target_price: float) -> str:
     """Cria mensagem de preço alvo para Telegram.
 
     :param last_price: Último preço.
@@ -36,6 +37,7 @@ def make_if_target_price_message(last_price: float, target_price: float) -> str:
     :return: Mensagem final.
     :rtype: str
     """
+    cripto = f"*Cripto:* {cripto :>15}"
     last_price = round(float(last_price), 2)
     target_price = round(float(target_price), 2)
 
@@ -46,5 +48,5 @@ def make_if_target_price_message(last_price: float, target_price: float) -> str:
     if last_price >= target_price:
         result = "Preço MAIOR que target."
 
-    message = '\n'.join([target, last, result])
+    message = '\n'.join([cripto, target, last, result])
     return message
