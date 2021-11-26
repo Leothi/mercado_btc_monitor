@@ -98,6 +98,7 @@ class TelegramNotifier:
                 cripto, ticker['last'], ticker['sell'], ticker['buy'])
             response = TelegramAPI.send_message(chat_id=envs.LOGGER_CHAT_ID, message=message,
                                                 disable_notifications=disable_notifications)
+            logger.debug(f'{response = }')
             if response['ok']:
                 logger.success("Mensagem enviada com sucesso.")
 
@@ -154,7 +155,8 @@ class TelegramNotifier:
                     logger.info("Enviando mensagem para Telegram.")
                     response = TelegramAPI.send_message(
                         chat_id=envs.TARGET_CHAT_ID, message=message, disable_notifications=disable_notifications)
-
+                    
+                    logger.debug(f'{response = }')
                     if response['ok']:
                         logger.success("Mensagem enviada com sucesso.")
 
