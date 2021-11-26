@@ -58,7 +58,7 @@ class EnvironmentVariables(BaseSettings):
 envs = EnvironmentVariables()
 
 # Envs Gunicorn
-bind = os.environ.get('GUNICORN_BIND', '0.0.0.0:8080')
+bind = os.environ.get('GUNICORN_BIND', '0.0.0.0:8081')
 workers = os.environ.get('GUNICORN_WORKERS', '1')
 reload = os.environ.get('GUNICORN_RELOAD', False)
 loglevel = os.environ.get('GUNICORN_LOGLEVEL', 'info')
